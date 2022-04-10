@@ -84,7 +84,7 @@ function buttonPlay(){
     window.speechSynthesis.speak(speech);
 }
 
-let question = new Question();
+const question = new Question();
 
 document.querySelector('button').addEventListener('click', buttonPlay);
 
