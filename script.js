@@ -71,9 +71,11 @@ class Question{
     }
 }
 
-function buttonPlay(){
+async function buttonPlay(event){
     if (question.questions.length == 0) return;
-    if (question.questions.length == 1) document.querySelector('button').style.display = 'none';
+    if (question.questions.length == 1) event.target.style.display = 'none';
+    
+    event.target.disabled = true;
 
     document.querySelector('p').innerText = question.play();
     
@@ -81,12 +83,16 @@ function buttonPlay(){
     speech.lang = "en";
     speech.text = document.querySelector('p').innerText;
 
-    window.speechSynthesis.speak(speech);
+    await new Promise(_ => {
+        window.speechSynthesis.speak(speech);
+    });
+
+    event.target.disabled = false;
 }
 
 const question = new Question();
 
-document.querySelector('button').addEventListener('click', buttonPlay);
+document.querySelector('button').addEventListener('click', event => buttonPlay(event));
 
 document.querySelector('input').onchange = function(){    
     let file = this.files[0];
