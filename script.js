@@ -85,9 +85,8 @@ async function buttonPlay(event){
 
     await new Promise(_ => {
         window.speechSynthesis.speak(speech);
+        event.target.disabled = false;
     });
-
-    event.target.disabled = false;
 }
 
 const question = new Question();
