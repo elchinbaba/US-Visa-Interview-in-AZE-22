@@ -75,18 +75,20 @@ async function buttonPlay(event){
     if (question.questions.length == 0) return;
     if (question.questions.length == 1) event.target.style.display = 'none';
     
+    event.target.disabled = true;
+
     document.querySelector('p').innerText = question.play();
     
     let speech = new SpeechSynthesisUtterance();
     speech.lang = "en";
     speech.text = document.querySelector('p').innerText;
-
+    speech.onend = () => {
+        event.target.disabled = false;
+    };
+    
     await new Promise(_ => {
-        event.target.disabled = true;
         window.speechSynthesis.speak(speech);
     });
-
-    event.target.disabled = false;
 }
 
 const question = new Question();
